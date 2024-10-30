@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <script src="./js/jquery-3.7.1.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <style>
+        .header h1 {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .title {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .title2 {
+            text-align: left;
+            margin: 20px 0;
+            font-size: 20px;
+            float: left;
+        }
+        .footer {
+            font-size: 14px;
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .dangky:hover {
+            background-color: antiquewhite;
+            border-radius: 4px;
+        }
+        select {
+            outline: 0;
+            font: inherit;
+            width: 20rem;
+            padding: 1rem 4rem 1rem 1rem;
+            color: black;
+            border-radius: 0.25em;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container my-4">
+        <div class="header d-flex align-items-center justify-content-center p-3 bg-light">
+            <img src="./img/image.png" alt="University Logo" width="100%" class="mr-3">
+        </div>
+        <div class="title2" style="width: 100%;background-color: rgb(253, 253, 253)">
+            <div style="display: inline-block; margin-right: 20px; color: rgb(23, 77, 139);">Trang chủ</div>
+            <div class="dangky" style="display: inline-block; color: rgb(23, 77, 139);" data-toggle="modal" data-target="#paymentModal" onclick="incrementOrderNumber()">Đăng ký</div>
+            <div style="display: inline-block; margin-right: 20px; margin-left: 20px; color: rgb(23, 77, 139);">Trợ giúp</div>
+        </div>
+        <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="paymentModalLabel">THÔNG TIN THANH TOÁN</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="paymentForm">
+                            <div class="form-group">
+                                <label for="memberID">Mã học viên:</label>
+                                <input type="text" class="form-control" id="memberID" placeholder="xx-yyyyyyyy">
+                                <div id="memberIDError" class="error" style="color: red;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Họ tên:</label>
+                                <input type="text" class="form-control" id="name" placeholder="Nguyen Van Anh">
+                                <div id="nameError" class="error" style="color: red;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" id="email" placeholder="example@iuh.edu.vn">
+                                <div id="emailError" class="error" style="color: red;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="service">Dịch vụ:</label>
+                                <select class="form-control" id="service" onchange="calculate1()">
+                                    <option value="">Chọn dịch vụ</option>
+                                    <option value="1">Bơi</option>
+                                    <option value="2">Đá bóng</option>
+                                    <option value="3">Cầu lông</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cost">Giá tiền:</label>
+                                <input type="text" class="form-control" id="cost" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Đồ dùng:</label><br>
+                                <input type="checkbox" value="Áo quần bơi" id="swimwear" onchange="calculate2()"> Áo quần bơi <br>
+                                <input type="checkbox" value="Phao" id="float" onchange="calculate2()"> Phao <br>
+                                <input type="checkbox" value="Kính bơi" id="goggles" onchange="calculate2()"> Kính bơi <br>
+                            </div>
+                            <div class="form-group">
+                                <label for="sum">Tổng tiền:</label>
+                                <input type="text" class="form-control" id="sum" readonly>
+                            </div>
+                            <button type="button" class="btn btn-success" onclick="validateForm()">Thanh toán</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered text-center">
+            <thead class="thead-light">
+                <tr>
+                    <th>STT</th>
+                    <th>Mã học viên</th>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>Tiền dịch vụ</th>
+                    <th>Tiền đồ dùng</th>
+                    <th>Tổng tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>123456789</td>
+                    <td>Aa Bb</td>
+                    <td>abc@gmail.com</td>
+                    <td>30000</td>
+                    <td>10000</td>
+                    <td>40000</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="footer">
+            <span>Mã sinh viên:__________________</span>
+            <span>Họ tên:__________________</span>
+            <span>Phòng thi:__________________</span>
+        </div>
+    </div>
+    <script>
+        function calculate1() {
+            const costInput = document.getElementById("cost");
+            const service = document.getElementById("service").value;
+            let serviceCost = 0;
+    
+            switch (service) {
+                case "1":
+                    serviceCost = 30000;
+                    break;
+                case "2":
+                    serviceCost = 50000;
+                    break;
+                case "3":
+                    serviceCost = 40000;
+                    break;
+            }
+            costInput.value = serviceCost;
+        }
+    
+        function calculate2() {
+            const sumInput = document.getElementById("sum");
+            let accessoriesCost = 0;
+            if (document.getElementById("swimwear").checked) accessoriesCost += 10000;
+            if (document.getElementById("float").checked) accessoriesCost += 5000;
+            if (document.getElementById("goggles").checked) accessoriesCost += 8000;
+    
+            const serviceCost = parseInt(document.getElementById("cost").value || 0);
+            const totalCost = serviceCost + accessoriesCost;
+            sumInput.value = totalCost;
+        }
+    
+        function validateForm() {
+            const memberID = document.getElementById("memberID").value;
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const serviceCost = document.getElementById("cost").value;
+            const totalCost = document.getElementById("sum").value;
+    
+            let valid = true;
+    
+            if (!/^\d{2}-\d{8}$/.test(memberID)) {
+                document.getElementById("memberIDError").textContent = "Mã học viên phải theo mẫu xx-yyyyyyyy.";
+                valid = false;
+            } else {
+                document.getElementById("memberIDError").textContent = "";
+            }
+    
+            if (!/^[A-Z][a-z]+(\s[A-Z][a-z]+)+$/.test(name)) {
+                document.getElementById("nameError").textContent = "Họ tên phải có chữ cái đầu viết hoa và không có số.";
+                valid = false;
+            } else {
+                document.getElementById("nameError").textContent = "";
+            }
+    
+            if (!/^[a-zA-Z0-9._%+-]+@iuh\.edu\.vn$/.test(email)) {
+                document.getElementById("emailError").textContent = "Email phải theo mẫu xxxxx@iuh.edu.vn.";
+                valid = false;
+            } else {
+                document.getElementById("emailError").textContent = "";
+            }
+    
+            if (valid) {
+                $('#paymentModal').modal('hide');
+                
+                const table = document.querySelector("table tbody");
+                const currentRowCount = table.rows.length;
+                const orderNumber = currentRowCount + 1;
+    
+                const newRow = document.createElement("tr");
+                newRow.innerHTML = `
+                    <td>${orderNumber}</td>
+                    <td>${memberID}</td>
+                    <td>${name}</td>
+                    <td>${email}</td>
+                    <td>${serviceCost}</td>
+                    <td>${totalCost - serviceCost}</td>
+                    <td>${totalCost}</td>
+                `;
+                table.appendChild(newRow);
+            }
+        }
+    </script>
+    
+</body>
+</html>
